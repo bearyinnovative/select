@@ -471,7 +471,7 @@ constructor(props) {
   getInputElement =() => {
     const props = this.props;
     const inputElement = props.getInputElement ? props.getInputElement() : <input id={props.id} />;
-    const inputCls = classnames(inputElement.props.className, {
+    const inputCls = classnames(inputElement.props.className, props.searchFieldClassName, {
       [`${props.prefixCls}-search__field`]: true,
     });
     // https://github.com/ant-design/ant-design/issues/4992#issuecomment-281542159
@@ -861,7 +861,10 @@ constructor(props) {
     const { value, open, inputValue } = this.state;
     const props = this.props;
     const { choiceTransitionName, prefixCls, maxTagTextLength, showSearch } = props;
-    const className = `${prefixCls}-selection__rendered`;
+    const className = classnames(
+      `${prefixCls}-selection__rendered`,
+      props.selectionRenderedClassName
+    );
     // search input is inside topControlNode in single, multiple & combobox. 2016/04/13
     let innerNode = null;
     if (isSingleMode(props)) {
@@ -973,6 +976,7 @@ constructor(props) {
 
   render() {
     const props = this.props;
+    const CustomArrow = props.customArrow || null;
     const multiple = isMultipleOrTags(props);
     const state = this.state;
     const { className, disabled, allowClear, prefixCls } = props;
@@ -1048,8 +1052,10 @@ constructor(props) {
           <div
             ref="selection"
             key="selection"
-            className={`${prefixCls}-selection
-            ${prefixCls}-selection--${multiple ? 'multiple' : 'single'}`}
+            className={classnames(`${prefixCls}-selection`,
+            `${prefixCls}-selection--${multiple ? 'multiple' : 'single'}`,
+            props.selectionClassName,
+            `${props.selectionClassName}--${multiple ? 'multiple' : 'single'}`)}
             role="combobox"
             aria-autocomplete="list"
             aria-haspopup="true"
@@ -1058,7 +1064,8 @@ constructor(props) {
           >
             {ctrlNode}
             {allowClear ? clear : null}
-            {multiple || !props.showArrow ? null :
+            {props.customArrow ? <CustomArrow className={`${prefixCls}-arrow`} /> : null}
+            {props.customArrow || multiple || !props.showArrow ? null :
               (<span
                 key="arrow"
                 className={`${prefixCls}-arrow`}
