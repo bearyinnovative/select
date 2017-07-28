@@ -604,8 +604,10 @@ constructor(props) {
     // avoid setState and its side effect
     if (this._focused) {
       classes(refs.root).add(`${props.prefixCls}-focused`);
+      if (props.className) classes(refs.root).add(`${props.className}-focused`);
     } else {
       classes(refs.root).remove(`${props.prefixCls}-focused`);
+      if (props.className) classes(refs.root).remove(`${props.className}-focused`);
     }
   }
 
@@ -992,6 +994,9 @@ constructor(props) {
     }
     const rootCls = {
       [className]: !!className,
+      [`${className}-focused`]: open || !!this._focused,
+      [`${className}-enabled`]: !disabled,
+      [`${className}-searching`]: open && props.showSearch,
       [prefixCls]: 1,
       [`${prefixCls}-open`]: open,
       [`${prefixCls}-focused`]: open || !!this._focused,
