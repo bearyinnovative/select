@@ -12,6 +12,7 @@ import {
   preventDefaultEvent, findFirstMenuItem,
   includesSeparators, splitBySeparators,
   findIndexInValueByLabel, defaultFilterFn,
+  addClassNamesSuffix,
 } from './util';
 import SelectTrigger from './SelectTrigger';
 import { SelectPropTypes } from './PropTypes';
@@ -604,10 +605,14 @@ constructor(props) {
     // avoid setState and its side effect
     if (this._focused) {
       classes(refs.root).add(`${props.prefixCls}-focused`);
-      if (props.className) classes(refs.root).add(`${props.className}-focused`);
+      if (props.className) {
+        classes(refs.root).add(...(addClassNamesSuffix(props.className, '-focused').split(' ')));
+      }
     } else {
       classes(refs.root).remove(`${props.prefixCls}-focused`);
-      if (props.className) classes(refs.root).remove(`${props.className}-focused`);
+      if (props.className) {
+        classes(refs.root).remove(...(addClassNamesSuffix(props.className, '-focused').split(' ')));
+      }
     }
   }
 
@@ -1005,9 +1010,9 @@ constructor(props) {
     }
     const rootCls = {
       [className]: !!className,
-      [`${className}-focused`]: open || !!this._focused,
-      [`${className}-enabled`]: !disabled,
-      [`${className}-searching`]: open && props.showSearch,
+      [addClassNamesSuffix(className, '-focused')]: open || !!this._focused,
+      [addClassNamesSuffix(className, '-enabled')]: !disabled,
+      [addClassNamesSuffix(className, '-searching')]: open && props.showSearch,
       [prefixCls]: 1,
       [`${prefixCls}-open`]: open,
       [`${prefixCls}-focused`]: open || !!this._focused,
@@ -1071,9 +1076,10 @@ constructor(props) {
             ref="selection"
             key="selection"
             className={classnames(`${prefixCls}-selection`,
-            `${prefixCls}-selection--${multiple ? 'multiple' : 'single'}`,
-            props.selectionClassName,
-            `${props.selectionClassName}--${multiple ? 'multiple' : 'single'}`)}
+              `${prefixCls}-selection--${multiple ? 'multiple' : 'single'}`,
+              props.selectionClassName,
+              addClassNamesSuffix(props.selectionClassName, `--${multiple ? 'multiple' : 'single'}`)
+            )}
             role="combobox"
             aria-autocomplete="list"
             aria-haspopup="true"

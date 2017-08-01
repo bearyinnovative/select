@@ -141,3 +141,8 @@ export function splitBySeparators(string, separators) {
 export function defaultFilterFn(input, child) {
   return String(getPropValue(child, this.props.optionFilterProp)).indexOf(input) > -1;
 }
+
+export function addClassNamesSuffix(classnames, suffix) {
+  const classes = classnames.replace(/\s+/g, ' ').trim().split(' ');
+  return classes.map(className => `${className}${suffix}`).join(' ');
+}
