@@ -982,10 +982,16 @@ constructor(props) {
     const state = this.state;
     const { className, disabled, allowClear, prefixCls, customDownArrow, customUpArrow } = props;
     const _customDownArrow = customDownArrow
-      ? React.cloneElement(customDownArrow, { className: `${prefixCls}-arrow` })
+      ? React.cloneElement(customDownArrow, {
+        className: `${prefixCls}-arrow`,
+        onClick: this.onArrowClick,
+      })
       : null;
     const _customUpArrow = customUpArrow
-      ? React.cloneElement(customUpArrow, { className: `${prefixCls}-arrow` })
+      ? React.cloneElement(customUpArrow, {
+        className: `${prefixCls}-arrow`,
+        onClick: this.onArrowClick,
+      })
       : null;
     const ctrlNode = this.renderTopControlNode();
     let extraSelectionProps = {};
