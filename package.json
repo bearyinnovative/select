@@ -1,5 +1,5 @@
 {
-  "name": "rc-select",
+  "name": "@beary/rc-select",
   "version": "6.8.8",
   "description": "React Select",
   "keywords": [
