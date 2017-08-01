@@ -19,6 +19,9 @@ export default class DropdownMenu extends React.Component {
     menuItems: PropTypes.any,
     inputValue: PropTypes.string,
     visible: PropTypes.bool,
+    /* beary added options */
+    menuClassName: PropTypes.string,
+    innerMenuClassName: PropTypes.string,
   }
 
   componentWillMount() {
@@ -130,6 +133,7 @@ export default class DropdownMenu extends React.Component {
         {...menuProps}
         selectedKeys={selectedKeys}
         prefixCls={`${prefixCls}-menu`}
+        className={this.props.innerMenuClassName}
       >
         {clonedMenuItems}
       </Menu>);
@@ -139,11 +143,15 @@ export default class DropdownMenu extends React.Component {
 
   render() {
     const renderMenu = this.renderMenu();
+    const {
+      menuClassName,
+    } = this.props;
     return renderMenu ? (
       <div
         style={{ overflow: 'auto' }}
         onFocus={this.props.onPopupFocus}
         onMouseDown={preventDefaultEvent}
+        className={menuClassName}
       >
         {renderMenu}
       </div>

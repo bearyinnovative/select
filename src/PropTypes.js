@@ -63,4 +63,9 @@ export const SelectPropTypes = {
   maxTagTextLength: PropTypes.number,
   tokenSeparators: PropTypes.arrayOf(PropTypes.string),
   getInputElement: PropTypes.func,
+  /* beary added options */
+  customDownArrow: PropTypes.node,
+  customUpArrow: PropTypes.node,
+  menuClassName: PropTypes.string,
+  innerMenuClassName: PropTypes.string,
 };

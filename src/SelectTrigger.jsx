@@ -72,6 +72,8 @@ export default class SelectTrigger extends React.Component {
       prefixCls={this.getDropdownPrefixCls()}
       onMenuSelect={props.onMenuSelect}
       onMenuDeselect={props.onMenuDeselect}
+      menuClassName={props.menuClassName}
+      innerMenuClassName={props.innerMenuClassName}
       value={props.value}
       firstActiveValue={props.firstActiveValue}
       defaultActiveFirstOption={props.defaultActiveFirstOption}

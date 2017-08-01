@@ -978,10 +978,15 @@ constructor(props) {
 
   render() {
     const props = this.props;
-    const CustomArrow = props.customArrow || null;
     const multiple = isMultipleOrTags(props);
     const state = this.state;
-    const { className, disabled, allowClear, prefixCls } = props;
+    const { className, disabled, allowClear, prefixCls, customDownArrow, customUpArrow } = props;
+    const _customDownArrow = customDownArrow
+      ? React.cloneElement(customDownArrow, { className: `${prefixCls}-arrow` })
+      : null;
+    const _customUpArrow = customUpArrow
+      ? React.cloneElement(customUpArrow, { className: `${prefixCls}-arrow` })
+      : null;
     const ctrlNode = this.renderTopControlNode();
     let extraSelectionProps = {};
     const { open } = this.state;
@@ -1025,6 +1030,8 @@ constructor(props) {
         onPopupFocus={this.onPopupFocus}
         dropdownAlign={props.dropdownAlign}
         dropdownClassName={props.dropdownClassName}
+        menuClassName={props.menuClassName}
+        innerMenuClassName={props.innerMenuClassName}
         dropdownMatchSelectWidth={props.dropdownMatchSelectWidth}
         defaultActiveFirstOption={props.defaultActiveFirstOption}
         dropdownMenuStyle={props.dropdownMenuStyle}
@@ -1069,8 +1076,9 @@ constructor(props) {
           >
             {ctrlNode}
             {allowClear ? clear : null}
-            {props.customArrow ? <CustomArrow className={`${prefixCls}-arrow`} /> : null}
-            {props.customArrow || multiple || !props.showArrow ? null :
+            {!open && customDownArrow ? _customDownArrow : null}
+            {open && customUpArrow ? _customUpArrow : null}
+            {customDownArrow || multiple || !props.showArrow ? null :
               (<span
                 key="arrow"
                 className={`${prefixCls}-arrow`}
