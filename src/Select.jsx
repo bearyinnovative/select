@@ -1011,6 +1011,17 @@ constructor(props) {
       className={`${prefixCls}-selection__clear`}
       onClick={this.onClearSelection}
     />);
+    const arrowProps = {
+      key: 'arrow',
+      className: `${prefixCls}-arrow`,
+      style: UNSELECTABLE_STYLE,
+      ...UNSELECTABLE_ATTRIBUTE,
+      onClick: this.onArrowClick,
+    };
+    const arrow = props.customArrow ? React.cloneElement(props.customArrow, arrowProps) : (
+      <span {...arrowProps}> <b /> </span>
+    );
+
     return (
       <SelectTrigger
         onPopupFocus={this.onPopupFocus}
@@ -1058,16 +1069,7 @@ constructor(props) {
           >
             {ctrlNode}
             {allowClear ? clear : null}
-            {multiple || !props.showArrow ? null :
-              (<span
-                key="arrow"
-                className={`${prefixCls}-arrow`}
-                style={UNSELECTABLE_STYLE}
-                {...UNSELECTABLE_ATTRIBUTE}
-                onClick={this.onArrowClick}
-              >
-              <b />
-            </span>)}
+            {multiple || !props.showArrow ? null : arrow}
           </div>
         </div>
       </SelectTrigger>
